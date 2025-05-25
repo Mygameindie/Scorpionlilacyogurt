@@ -1,22 +1,24 @@
 function applyPreset1() {
     // Hide all clothing items first (except underwear, boxers, and sweatshirt)
     hideSpecificCategories([
-    "accessories1", "accessories2", "accessories3", "backitems3",
-    "bottomunderwear1", "bottomunderwear2", "bottomunderwear3",
-    "bow2", "boxers1", "boxers2", "boxers3",
-    "dress1", "dress2", "dress3",
-    "expression1", "expression2", "expression3",
-    "hat1", "hat2", "hat3",
-    "jacket1", "jacket2", "jacket3",
-    "mask2", "onepiece1", "onepiece3",
-    "pants1", "pants2", "pants3",
-    "shoes1", "shoes2", "shoes3",
-    "skirt1", "skirt2", "skirt3",
-    "socks1", "socks2", "socks3",
-    "sweatshirt1", "sweatshirt2", "sweatshirt3",
-    "top1", "top2", "top3",
-    "topunderwear1", "topunderwear2", "topunderwear3"
-]);
+           "accessories1", "accessories2", "accessories3", "backitems3",
+        "bottomunderwear1", "bottomunderwear2", "bottomunderwear3",
+        "bow1", "bow2", "bow3",
+        "boxers1", "boxers2", "boxers3",
+        "dress1", "dress2", "dress3",
+        "expression1", "expression2", "expression3",
+        "hat1", "hat2", "hat3",
+        "jacket1", "jacket2", "jacket3",
+        "mask1", "mask2", "mask3",
+        "onepiece1", "onepiece3",
+        "pants1", "pants2", "pants3",
+        "shoes1", "shoes2", "shoes3",
+        "skirt1", "skirt2", "skirt3",
+        "socks1", "socks2", "socks3",
+        "sweatshirt1", "sweatshirt2", "sweatshirt3",
+        "top1", "top2", "top3",
+        "topunderwear1", "topunderwear2", "topunderwear3"
+    ]);
 
     // Ensure that the required items are explicitly set to visible
       // Ensure that the required items are explicitly set to visible
@@ -53,15 +55,17 @@ function showItem(itemId, categoryName) {
 
 
 function applyUnderwearOnlyPreset() {
-    hideSpecificCategories([
+   hideSpecificCategories([
         "accessories1", "accessories2", "accessories3", "backitems3",
         "bottomunderwear1", "bottomunderwear2", "bottomunderwear3",
-        "bow2", "boxers1", "boxers2", "boxers3",
+        "bow1", "bow2", "bow3",
+        "boxers1", "boxers2", "boxers3",
         "dress1", "dress2", "dress3",
         "expression1", "expression2", "expression3",
         "hat1", "hat2", "hat3",
         "jacket1", "jacket2", "jacket3",
-        "mask2", "onepiece1", "onepiece3",
+        "mask1", "mask2", "mask3",
+        "onepiece1", "onepiece3",
         "pants1", "pants2", "pants3",
         "shoes1", "shoes2", "shoes3",
         "skirt1", "skirt2", "skirt3",
@@ -95,23 +99,25 @@ function showItem(itemId, categoryName) {
 
 function applyCustomPreset() {
     // Hide all clothing items first
-    hideSpecificCategories([
-    "accessories1", "accessories2", "accessories3", "backitems3",
-    "bottomunderwear1", "bottomunderwear2", "bottomunderwear3",
-    "bow2", "boxers1", "boxers2", "boxers3",
-    "dress1", "dress2", "dress3",
-    "expression1", "expression2", "expression3",
-    "hat1", "hat2", "hat3",
-    "jacket1", "jacket2", "jacket3",
-    "mask2", "onepiece1", "onepiece3",
-    "pants1", "pants2", "pants3",
-    "shoes1", "shoes2", "shoes3",
-    "skirt1", "skirt2", "skirt3",
-    "socks1", "socks2", "socks3",
-    "sweatshirt1", "sweatshirt2", "sweatshirt3",
-    "top1", "top2", "top3",
-    "topunderwear1", "topunderwear2", "topunderwear3" ,
-]);
+   hideSpecificCategories([
+        "accessories1", "accessories2", "accessories3", "backitems3",
+        "bottomunderwear1", "bottomunderwear2", "bottomunderwear3",
+        "bow1", "bow2", "bow3",
+        "boxers1", "boxers2", "boxers3",
+        "dress1", "dress2", "dress3",
+        "expression1", "expression2", "expression3",
+        "hat1", "hat2", "hat3",
+        "jacket1", "jacket2", "jacket3",
+        "mask1", "mask2", "mask3",
+        "onepiece1", "onepiece3",
+        "pants1", "pants2", "pants3",
+        "shoes1", "shoes2", "shoes3",
+        "skirt1", "skirt2", "skirt3",
+        "socks1", "socks2", "socks3",
+        "sweatshirt1", "sweatshirt2", "sweatshirt3",
+        "top1", "top2", "top3",
+        "topunderwear1", "topunderwear2", "topunderwear3"
+    ]);
 
     // Show only the uploaded files
     showItem("pants2_2.png", "pants2");
@@ -196,7 +202,7 @@ function applyYogurtPreset() {
     hideSpecificCategories([
         "accessories1", "accessories2", "accessories3", "backitems3",
         "bottomunderwear1", "bottomunderwear2", "bottomunderwear3",
-        "bow2", "bow1", "bow3",
+        "bow1", "bow2", "bow3",
         "boxers1", "boxers2", "boxers3",
         "dress1", "dress2", "dress3",
         "expression1", "expression2", "expression3",
