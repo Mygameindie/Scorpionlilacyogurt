@@ -149,22 +149,26 @@ function applyColorToItem(filterValue) {
 }
 
 // ===== LOAD ITEMS =====
+// Load items in batches to reduce load time and improve responsiveness
 async function loadItemsInBatches(batchSize = 3) {
     const baseContainer = document.querySelector('.base-container');
     const controlsContainer = document.querySelector('.controls');
+    
+    // Create color picker first
     createColorPicker();
-
+    
     for (let i = 0; i < jsonFiles.length; i += batchSize) {
         const batch = jsonFiles.slice(i, i + batchSize);
+
         await Promise.all(batch.map(async file => {
             const data = await loadItemFile(file);
             const categoryName = file.replace('.json', '');
             const categoryContainer = document.createElement('div');
             categoryContainer.classList.add('category');
 
-            const heading = document.createElement('h3');
-            heading.textContent = categoryName;
-            categoryContainer.appendChild(heading);
+            const categoryHeading = document.createElement('h3');
+            categoryHeading.textContent = categoryName;
+            categoryContainer.appendChild(categoryHeading);
 
             data.forEach(item => {
                 const itemId = item.id.endsWith('.png') ? item.id : `${item.id}.png`;
@@ -174,40 +178,49 @@ async function loadItemsInBatches(batchSize = 3) {
                 img.src = item.src;
                 img.alt = item.alt;
                 img.classList.add(categoryName);
-                img.style.visibility = item.visibility === 'visible' ? 'visible' : 'hidden';
+                img.setAttribute('data-file', file);
+                img.style.visibility = item.visibility === "visible" ? "visible" : "hidden";
                 img.style.position = 'absolute';
                 img.style.zIndex = getZIndex(categoryName);
                 baseContainer.appendChild(img);
 
-                const buttonContainer = document.createElement('div');
-                const wrap = document.createElement('div');
-                wrap.classList.add('button-wrap');
+                // Create container for buttons
+const buttonContainer = document.createElement('div');
+buttonContainer.classList.add('button-container');
 
-                const btn = document.createElement('img');
-                btn.src = item.src.replace('.png', 'b.png');
-                btn.alt = `${item.alt} Button`;
-                btn.classList.add('item-button');
-                btn.onclick = () => toggleVisibility(itemId, categoryName);
-                wrap.appendChild(btn);
+// Create a wrapper to stack buttons vertically
+const buttonWrap = document.createElement('div');
+buttonWrap.classList.add('button-wrap');
 
-                const colorBtn = document.createElement('button');
-                colorBtn.textContent = '🎨';
-                colorBtn.classList.add('color-change-button');
-                colorBtn.onclick = (e) => {
-                    e.stopPropagation();
-                    const target = document.getElementById(itemId);
-                    if (target.style.visibility === 'hidden') {
-                        toggleVisibility(itemId, categoryName);
-                    }
-                    showColorPicker(itemId);
-                };
-                wrap.appendChild(colorBtn);
+// Main item button
+const button = document.createElement('img');
+const buttonFile = item.src.replace('.png', 'b.png');
+button.src = buttonFile;
+button.alt = item.alt + ' Button';
+button.classList.add('item-button');
+button.onclick = () => toggleVisibility(itemId, categoryName);
+buttonWrap.appendChild(button);
 
-                buttonContainer.appendChild(wrap);
-                categoryContainer.appendChild(buttonContainer);
+// Color change button
+const colorButton = document.createElement('button');
+colorButton.textContent = '🎨';
+colorButton.classList.add('color-change-button');
+colorButton.onclick = (e) => {
+    e.stopPropagation();
+    const targetItem = document.getElementById(itemId);
+    if (targetItem.style.visibility === 'hidden') {
+        toggleVisibility(itemId, categoryName);
+    }
+    showColorPicker(itemId);
+};
+buttonWrap.appendChild(colorButton);
+
+// Add stacked buttonWrap to container
+buttonContainer.appendChild(buttonWrap);
+categoryContainer.appendChild(buttonContainer);
             });
 
-            controlsContainer.appendChild(categoryContainer);
+            //controlsContainer.appendChild(categoryContainer);
         }));
 
         await new Promise(resolve => setTimeout(resolve, 50));
