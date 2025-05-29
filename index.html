@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Dress-Up Game beach</title>
-<link rel="stylesheet" href="style.css">
+    <title>Dress-Up Game</title>
+    <link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="three_scroll_bar_style.css">
     <link rel="stylesheet" href="scroll.css"> <!-- Link to the new CSS -->
 </head>
 <body>
@@ -12,34 +13,26 @@
         <img src="Mainmenu.png" alt="Main Menu Image">
         <button onclick="enterGame()">Play</button>
     </div>
-    
+
     <div class="game-container">
         <div class="base-container">
-            <!-- Base character image (Always Visible) -->
             <img id="base-image" src="Base.png" alt="Base Image">
-
-            <!-- Base 2 (Initially Hidden, Click to Show) -->
             <img id="base2-image" src="Base2.png" alt="Base 2" style="display: none;">
-
-            <!-- Base 3 (Initially Hidden, Click to Show) -->
             <img id="base3-image" src="Base3.png" alt="Base 3" style="display: none;">
-			<!-- Base 4 (Initially Hidden, Click to Show) -->
-<img id="base4-image" src="Base4.png" alt="Base 4" style="display: none;">
-
-<!-- Third Button (Toggle Base4) -->
-<button class="small-button button-3" onclick="changeToBase4()"></button>
-
-            <!-- First Button (Toggle Base2) -->
+            <img id="base4-image" src="Base4.png" alt="Base 4" style="display: none;">
+            
             <button class="small-button button-1" onclick="changeToBase2()"></button>
-
-            <!-- Second Button (Toggle Base3) -->
             <button class="small-button button-2" onclick="changeToBase3()"></button>
+            <button class="small-button button-3" onclick="changeToBase4()"></button>
+			
         </div>
-<!-- Scrollable Buttons for Categories -->
-        <div class="controls">
-            <div class="scrollable-buttons">
-                <!-- Buttons will be generated dynamically from scrolls.js -->
-            </div>
+
+
+<div class="controls">
+  <div class="combined-scroll-bar" id="presetScrollBar"></div> <!-- 1. Presets -->
+  <div class="combined-scroll-bar" id="categoryScrollBar"></div> <!-- 2. Categories -->
+  <div class="scrollable-buttons"></div> <!-- 3. Items for selected category -->
+</div>
         </div>
     </div>
 

@@ -220,14 +220,14 @@ function applyYogurtPreset() {
     ]);
 	
 	showItem("pants1_3.png", "pants1");
-showItem("pants3_3.png", "pants3");
+showItem("pants3_1.png", "pants3");
 showItem("jacket1_1.png", "jacket1");
 showItem("jacket2_1.png", "jacket2"); // already in previous preset but still valid
 showItem("jacket3_1.png", "jacket3");
 showItem("hat1_2.png", "hat1");
 showItem("hat2_1.png", "hat2");
 showItem("hat3_1.png", "hat3");
-showItem("pants3_1.png", "pants3");
+showItem("pants2_2.png", "pants2");
 showItem("topunderwear1_1.png", "topunderwear1");
 showItem("bottomunderwear1_1.png", "bottomunderwear1");
 showItem("bottomunderwear2_1.png", "bottomunderwear2");
@@ -272,7 +272,7 @@ function applyScorpionPreset() {
     ]);
 
     // Show the specific items from Scorpion preset
-    showItem("pants3_4.png", "pants3");
+    showItem("pants3_3.png", "pants3");
     showItem("pants2_3.png", "pants2");
     showItem("hat2_2.png", "hat2");
     showItem("hat3_2.png", "hat3");

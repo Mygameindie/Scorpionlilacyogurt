@@ -4,13 +4,13 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    height: 500vh;
+    height: 100vh;
     margin: 0;
     background-image: url('background.jpg');
-    background-size: 1180px 500px; /* Set the background size like before */
-    background-repeat: no-repeat; /* Prevent image repetition */
-    background-position: auto; /* Align the image properly */
-    background-attachment: auto; /* Keep it static and prevent unwanted scroll effects */
+    background-size: 1180px 500px;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-attachment: fixed;
     width: 100vw;
     overflow-x: hidden;
 }
@@ -46,6 +46,7 @@ body {
     border-radius: 5px;
     width: 200px;
     text-align: center;
+    transition: background 0.3s ease-in-out;
 }
 
 .main-menu button:hover {
@@ -72,6 +73,7 @@ body {
     left: 0;
     right: 0;
     margin: auto;
+    pointer-events: none;
 }
 
 /* Controls section */
@@ -83,6 +85,7 @@ body {
     align-items: center;
     width: 100%;
     flex-wrap: wrap;
+    transition: flex-wrap 0.3s ease-in-out;
 }
 
 /* Category styling */
@@ -132,126 +135,51 @@ body {
 .controls img:hover {
     border-color: #6200ea;
 }
+
 .base-container {
     transition: all 0.3s ease-in-out;
 }
 
-.mobile-layout {
+.preset-container {
     display: flex;
-    flex-direction: column;
-    width: 90%;
-    height: auto;
-}
-
-.desktop-layout {
-    display: block;
-    width: 500px;
-    height: 400px;
-}
-
-.controls {
-    transition: flex-wrap 0.3s ease-in-out;
-}
-
-.mobile-controls {
-    flex-wrap: wrap;
-}
-
-.desktop-controls {
-    flex-wrap: nowrap;
-}
-/* Ensure backitems are always behind base */
-.backitems {
-    position: absolute;
-    width: 500px;
-    height: auto;
-    left: 0;
-    right: 0;
-    margin: auto;
-    z-index: 0;
-}
-
-/* Ensure the base layer is above backitems */
-.base-layer {
-    position: absolute;
-    width: 500px;
-    height: auto;
-    left: 0;
-    right: 0;
-    margin: auto;
-    z-index: 1;
-}
-
-/* Fix overlapping text */
-.category h3 {
-    font-size: 18px;
-    margin-bottom: 15px;
-    text-align: center;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
     width: 100%;
+    margin-top: 20px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    white-space: nowrap;
 }
 
-/* Hide broken images */
-img:not([src]) {
-    display: none;
-}
-
-/* Buttons */
-.controls img {
+.preset-button {
+    padding: 10px 15px;
+    font-size: 16px;
     cursor: pointer;
-    width: 50px;
-    height: auto;
-    margin: 5px;
-    border: 2px solid transparent;
-    transition: border-color 0.3s;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 120px;
+    text-align: center;
+    flex-shrink: 0;
+    transition: background 0.3s ease-in-out;
 }
 
-.controls img:hover {
-    border-color: #6200ea;
-}
-/* Ensure backitems always stay at the lowest layer */
-.backitems {
-    position: absolute;
-    width: 500px;
-    height: auto;
-    left: 0;
-    right: 0;
-    margin: auto;
-    z-index: -1 !important; /* Force it behind everything */
-    pointer-events: none; /* Prevent interference */
-	display: none;
+.preset-button:hover {
+    background-color: #388E3C;
 }
 
-/* Ensure the base layer is always above backitems */
-.base-layer {
-    position: absolute;
-    width: 500px;
-    height: auto;
-    left: 0;
-    right: 0;
-    margin: auto;
-    z-index: 1 !important; /* Forces it above backitems */
-    pointer-events: none;
-    user-select: none;
-	display: none;
-}
-
-/* Ensure other elements stack correctly */
-.base-container img {
-    pointer-events: none;
-}
 /* Responsive Background Fix for Smaller Screens */
 @media (max-width: 600px) {
     body {
-        background-size: 600px 500px; /* Keep a smaller version of the background */
-        background-repeat: no-repeat;
-        background-position: auto;
-        background-attachment: auto;
+        background-size: 600px 500px;
         width: 100vw;
-        overflow-x: hidden;
     }
 
     .base-container {
-        width: 10%;
+        width: 90%;
         height: auto;
         display: flex;
         flex-direction: column;
@@ -260,8 +188,6 @@ img:not([src]) {
 
     .base-container img {
         width: 100%;
-        height: auto;
-        position: auto;
     }
 
     .controls {
@@ -284,17 +210,6 @@ img:not([src]) {
     }
 }
 
-/* Small Button Fix */
-.small-button {
-    position: absolute;
-    width: 5px; /* Default size */
-    height: 10px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    opacity: 1;
-}
-
 /* Ensure base container scales with screen */
 .base-container {
     position: relative;
@@ -314,8 +229,8 @@ img:not([src]) {
 /* Ensure buttons scale with the base container */
 .small-button {
     position: absolute;
-    width: 4%; /* Adjusted size dynamically */
-    height: 8%;
+    width: 5%; /* Adjusted size dynamically */
+    height: 5%;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -325,18 +240,13 @@ img:not([src]) {
 
 /* Button Positions (Relative to Base Container) */
 .button-1 {
-    top: 65%; /* Adjusted using percentage */
-    left: 18%;
+    top: 80%; /* Adjusted using percentage */
+    left: 31.5%;
 }
 
 .button-2 {
-    top: 65%;
-    left: 50%;
-}
-
-.button-3 {
-    top: 65%;
-    left: 82%;
+    top: 80%;
+    left: 71.5%;
 }
 
 /* Responsive Scaling */
@@ -347,7 +257,130 @@ img:not([src]) {
     }
 
     .small-button {
-        width: 5%;
-        height: 10%;
+        width: 4%;
+        height: 4%;
     }
+}
+/* Color Picker Styles */
+.color-picker-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 2px solid #333;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    max-width: 300px;
+}
+
+.color-picker-container h4 {
+    margin-top: 0;
+    text-align: center;
+    color: #333;
+}
+
+.color-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.color-button {
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    background: #f9f9f9;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 12px;
+}
+
+.color-button:hover {
+    background: #e0e0e0;
+    border-color: #333;
+    transform: scale(1.05);
+}
+
+.color-change-button {
+    background: #ff6b6b;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 5px;
+    transition: all 0.2s ease;
+}
+
+.color-change-button:hover {
+    background: #ff5252;
+    transform: scale(1.1);
+}
+
+.button-container {
+    display: flex;
+    align-items: cente;
+    margin-bottom: 5px;
+}
+
+.close-color-picker {
+    width: 100%;
+    padding: 10px;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.close-color-picker:hover {
+    background: #555;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    .color-picker-container {
+        max-width: 90%;
+        padding: 15px;
+    }
+    
+    .color-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .color-change-button {
+        width: 25px;
+        height: 25px;
+        font-size: 14px;
+    }
+}
+.category {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;  /* Make buttons side by side */
+    align-items: center;
+    gap: 4px;
+}
+.button-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+.button-3 {
+    top: 80%;
+    left: 51.5%;
 }
