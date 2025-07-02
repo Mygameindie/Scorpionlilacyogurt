@@ -1,44 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Dress-Up Game</title>
-    <link rel="stylesheet" href="style.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<title>Dress-Up Game</title>
+	<link rel="stylesheet" href="style.css">
 	<link rel="stylesheet" href="three_scroll_bar_style.css">
-    <link rel="stylesheet" href="scroll.css"> <!-- Link to the new CSS -->
+	<link rel="stylesheet" href="scroll.css"> <!-- Link to the new CSS -->
 </head>
+
 <body>
-    <div class="main-menu">
-        <img src="Mainmenu.png" alt="Main Menu Image">
-        <button onclick="enterGame()">Play</button>
-    </div>
+	<div class="main-menu">
+		<img src="Mainmenu.png" alt="Main Menu Image">
+		<button onclick="enterGame()">Play</button>
+	</div>
 
-    <div class="game-container">
-        <div class="base-container">
-            <img id="base-image" src="Base.png" alt="Base Image">
-            <img id="base2-image" src="Base2.png" alt="Base 2" style="display: none;">
-            <img id="base3-image" src="Base3.png" alt="Base 3" style="display: none;">
-            <img id="base4-image" src="Base4.png" alt="Base 4" style="display: none;">
-            
-            <button class="small-button button-1" onclick="changeToBase2()"></button>
-            <button class="small-button button-2" onclick="changeToBase3()"></button>
-            <button class="small-button button-3" onclick="changeToBase4()"></button>
+	<div class="game-container">
+		<div class="base-container">
+			<img id="base-image" src="Base.png" alt="Base Image">
+			<img id="base2-image" src="Base2.png" alt="Base 2" style="display: none;">
+			<img id="base3-image" src="Base3.png" alt="Base 3" style="display: none;">
+			<img id="base4-image" src="Base4.png" alt="Base 4" style="display: none;">
+
+			<button class="small-button button-1" onclick="changeToBase2()"></button>
+			<button class="small-button button-2" onclick="changeToBase3()"></button>
+			<button class="small-button button-3" onclick="changeToBase4()"></button>
 			
-        </div>
-
-
-<div class="controls">
-  <div class="combined-scroll-bar" id="presetScrollBar"></div> <!-- 1. Presets -->
-  <div class="combined-scroll-bar" id="categoryScrollBar"></div> <!-- 2. Categories -->
-  <div class="scrollable-buttons"></div> <!-- 3. Items for selected category -->
+			<!-- Background -->
+			<img id="background" src="background1.png" style="position: absolute; top: 0; left: 0; z-index: -1;" />
+			<button id="toggleBackgroundBtn" style="position: absolute; top: 10px; left: 10px; z-index: 200;">Change Background</button>
+		</div>
+	<!-- 🔄 Fullscreen Loading Screen -->
+<div id="loading-screen" style="
+    position: fixed;
+    inset: 0;
+    background-color: white;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-family: sans-serif;
+    z-index: 999999;
+    pointer-events: all;">
+    Loading...
 </div>
-        </div>
-    </div>
+		<!-- Controls -->
+		<div class="controls">
+			<div class="combined-scroll-bar" id="presetScrollBar"></div> <!-- 1. Presets -->
+			<div class="combined-scroll-bar" id="categoryScrollBar"></div> <!-- 2. Categories -->
+			<div class="scrollable-buttons"></div> <!-- 3. Items for selected category -->
+		</div>
 
-    <!-- JavaScript Files -->
-    <script src="script.js"></script>
-    <script src="preset.js"></script>  
-    <script src="scrolls.js"></script> <!-- Link to the new JavaScript -->
+		<!-- 🔊 Music Controls -->
+		<div class="music-button-wrapper">
+			<button id="musicToggleButton" class="music-toggle-button">🔊 Music On</button>
+		</div>
+		<div class="music-select-wrapper">
+			<label for="musicSelector">🎵 Choose Music:</label>
+			<select id="musicSelector" class="music-selector">
+				<option value="Music1.mp3">Track 1</option>
+				<option value="Music2.mp3">Track 2</option>
+
+			</select>
+		</div>
+		<audio id="backgroundMusic" loop>
+			<source src="Music1.mp3" type="audio/mp3" />
+			Your browser does not support the audio element.
+		</audio>
+	</div>
+
+	<!-- JavaScript Files -->
+	<script src="script.js"></script>
+	<script src="preset.js"></script>
+	<script src="scrolls.js"></script>
 </body>
 </html>

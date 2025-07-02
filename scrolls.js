@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
         'shoes1', 'shoes2', 'jacket1', 'jacket2', 'socks1', 'socks2',
         'hat1', 'hat2', 'dress1', 'dress2', 'sweatshirt1', 'sweatshirt2',
         'topunderwear1', 'bottomunderwear1', 'boxers1', 'boxers2',
-        'onepiece1', 'leaf1', 'leaf2', 'top3', 'pants3', 'skirt3', 'shoes3', 'jacket3'
+        'onepiece1', 'top3', 'pants3', 'skirt3', 'shoes3', 'jacket3'
     ];
 
     function generatePresetButtons() {

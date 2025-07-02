@@ -241,6 +241,13 @@ function adjustCanvasLayout() {
 function enterGame() {
     document.querySelector('.main-menu').style.display = 'none';
     document.querySelector('.game-container').style.display = 'block';
+
+    const audio = document.getElementById("backgroundMusic");
+    const musicBtn = document.getElementById("musicToggleButton");
+
+    if (audio && musicBtn && audio.paused) {
+        musicBtn.click(); // simulate the user clicking the Music On button
+    }
 }
 
 function blurButton(event) {
@@ -277,3 +284,97 @@ window.onload = () => {
 };
 
 window.addEventListener('resize', adjustCanvasLayout);
+
+// ===== MUSIC & BACKGROUND =====
+function setupMusicToggle() {
+    const audio = document.getElementById("backgroundMusic");
+    const button = document.getElementById("musicToggleButton");
+    let isPlaying = false;
+
+    button.addEventListener("click", () => {
+        if (isPlaying) {
+            audio.pause();
+            button.textContent = "🔊 Music Off";
+        } else {
+            audio.play().catch(e => console.warn("Autoplay blocked:", e));
+            button.textContent = "🔊 Music On";
+        }
+        isPlaying = !isPlaying;
+    });
+}
+
+function setupMusicSelector() {
+    const selector = document.getElementById("musicSelector");
+    const audio = document.getElementById("backgroundMusic");
+    const source = audio.querySelector("source");
+
+    selector.addEventListener("change", () => {
+        source.src = selector.value;
+        audio.load();
+        audio.play().catch(e => console.warn("Playback issue:", e));
+        document.getElementById("musicToggleButton").textContent = "🔊 Music On";
+    });
+}
+
+function setupBackgroundSwitch() {
+    let currentBackground = 1;
+    const maxBackground = 2;
+    const bg = document.getElementById('background');
+    const button = document.getElementById('toggleBackgroundBtn');
+
+    bg.style.display = 'block';
+    button.addEventListener('click', () => {
+        currentBackground = (currentBackground % maxBackground) + 1;
+        bg.src = `background${currentBackground}.png`;
+    });
+}
+
+function createColorPicker() {
+    // Truncated for brevity
+}
+
+// ===== ON LOAD =====
+window.addEventListener('load', () => {
+    setupMusicToggle();
+    setupMusicSelector();
+    setupBackgroundSwitch();
+    
+});
+// ===== LOAD ITEMS (OPTIMIZED) =====
+async function loadItemsInBatches(batchSize = 5, delay = 50) {
+    const baseContainer = document.querySelector('.base-container');
+    createColorPicker();
+
+    for (let i = 0; i < jsonFiles.length; i += batchSize) {
+        const batch = jsonFiles.slice(i, i + batchSize);
+
+        await Promise.all(batch.map(async file => {
+            const data = await loadItemFile(file);
+            const categoryName = file.replace('.json', '');
+
+            const fragment = document.createDocumentFragment();
+            data.forEach(item => {
+                const itemId = item.id.endsWith('.png') ? item.id : `${item.id}.png`;
+                const img = new Image();
+                img.id = itemId;
+                img.src = item.src;
+                img.alt = item.alt;
+                img.className = categoryName;
+                img.setAttribute('data-file', file);
+                img.style.visibility = item.visibility === "visible" ? "visible" : "hidden";
+                img.style.position = 'absolute';
+                img.style.zIndex = getZIndex(categoryName);
+                fragment.appendChild(img);
+            });
+
+            baseContainer.appendChild(fragment);
+        }));
+
+        await new Promise(res => setTimeout(res, delay));
+    }
+}
+// Hide loading screen after everything finishes loading
+window.addEventListener('load', () => {
+    const loadingScreen = document.getElementById('loading-screen');
+    if (loadingScreen) loadingScreen.style.display = 'none';
+});
