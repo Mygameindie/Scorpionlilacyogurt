@@ -11,7 +11,12 @@ const jsonFiles = [
     'skirt1.json', 'skirt2.json', 'skirt3.json',
     'top1.json', 'top2.json', 'top3.json',
     'dress1.json', 'dress2.json', 'dress3.json',
-    'jacket1.json', 'jacket2.json', 'jacket3.json',
+    'jacket1.json', 'jacket2.json', 'jacket3.json','dress1w.json',
+	'dress2w.json',
+	'dress3w.json',
+	'skirt1w.json',
+	'skirt2w.json',
+	'skirt3w.json',
     'accessories1.json', 'accessories2.json', 'accessories3.json',
     'hat1.json', 'hat2.json', 'hat3.json',
     'mask1.json', 'mask2.json', 'mask3.json',
@@ -377,4 +382,112 @@ async function loadItemsInBatches(batchSize = 5, delay = 50) {
 window.addEventListener('load', () => {
     const loadingScreen = document.getElementById('loading-screen');
     if (loadingScreen) loadingScreen.style.display = 'none';
+});
+function applyWindEffect() {
+    for (let i = 1; i <= 10; i++) {
+        const skirt1Normal = document.getElementById(`skirt1_${i}.png`);
+        const skirt1Wind = document.getElementById(`skirt1_${i}w.png`);
+        const dress1Normal = document.getElementById(`dress1_${i}.png`);
+        const dress1Wind = document.getElementById(`dress1_${i}w.png`);
+
+        const skirt2Normal = document.getElementById(`skirt2_${i}.png`);
+        const skirt2Wind = document.getElementById(`skirt2_${i}w.png`);
+        const dress2Normal = document.getElementById(`dress2_${i}.png`);
+        const dress2Wind = document.getElementById(`dress2_${i}w.png`);
+
+        const skirt3Normal = document.getElementById(`skirt3_${i}.png`);
+        const skirt3Wind = document.getElementById(`skirt3_${i}w.png`);
+        const dress3Normal = document.getElementById(`dress3_${i}.png`);
+        const dress3Wind = document.getElementById(`dress3_${i}w.png`);
+
+        if (skirt1Normal && skirt1Wind && skirt1Normal.style.visibility === 'visible') {
+            skirt1Normal.style.visibility = 'hidden';
+            skirt1Wind.style.visibility = 'visible';
+        }
+        if (dress1Normal && dress1Wind && dress1Normal.style.visibility === 'visible') {
+            dress1Normal.style.visibility = 'hidden';
+            dress1Wind.style.visibility = 'visible';
+        }
+
+        if (skirt2Normal && skirt2Wind && skirt2Normal.style.visibility === 'visible') {
+            skirt2Normal.style.visibility = 'hidden';
+            skirt2Wind.style.visibility = 'visible';
+        }
+        if (dress2Normal && dress2Wind && dress2Normal.style.visibility === 'visible') {
+            dress2Normal.style.visibility = 'hidden';
+            dress2Wind.style.visibility = 'visible';
+        }
+
+        if (skirt3Normal && skirt3Wind && skirt3Normal.style.visibility === 'visible') {
+            skirt3Normal.style.visibility = 'hidden';
+            skirt3Wind.style.visibility = 'visible';
+        }
+        if (dress3Normal && dress3Wind && dress3Normal.style.visibility === 'visible') {
+            dress3Normal.style.visibility = 'hidden';
+            dress3Wind.style.visibility = 'visible';
+        }
+    }
+}
+
+function removeWindEffect() {
+    for (let i = 1; i <= 10; i++) {
+        const skirt1Normal = document.getElementById(`skirt1_${i}.png`);
+        const skirt1Wind = document.getElementById(`skirt1_${i}w.png`);
+        const dress1Normal = document.getElementById(`dress1_${i}.png`);
+        const dress1Wind = document.getElementById(`dress1_${i}w.png`);
+
+        const skirt2Normal = document.getElementById(`skirt2_${i}.png`);
+        const skirt2Wind = document.getElementById(`skirt2_${i}w.png`);
+        const dress2Normal = document.getElementById(`dress2_${i}.png`);
+        const dress2Wind = document.getElementById(`dress2_${i}w.png`);
+
+        const skirt3Normal = document.getElementById(`skirt3_${i}.png`);
+        const skirt3Wind = document.getElementById(`skirt3_${i}w.png`);
+        const dress3Normal = document.getElementById(`dress3_${i}.png`);
+        const dress3Wind = document.getElementById(`dress3_${i}w.png`);
+
+        if (skirt1Wind && skirt1Normal && skirt1Wind.style.visibility === 'visible') {
+            skirt1Wind.style.visibility = 'hidden';
+            skirt1Normal.style.visibility = 'visible';
+        }
+        if (dress1Wind && dress1Normal && dress1Wind.style.visibility === 'visible') {
+            dress1Wind.style.visibility = 'hidden';
+            dress1Normal.style.visibility = 'visible';
+        }
+
+        if (skirt2Wind && skirt2Normal && skirt2Wind.style.visibility === 'visible') {
+            skirt2Wind.style.visibility = 'hidden';
+            skirt2Normal.style.visibility = 'visible';
+        }
+        if (dress2Wind && dress2Normal && dress2Wind.style.visibility === 'visible') {
+            dress2Wind.style.visibility = 'hidden';
+            dress2Normal.style.visibility = 'visible';
+        }
+
+        if (skirt3Wind && skirt3Normal && skirt3Wind.style.visibility === 'visible') {
+            skirt3Wind.style.visibility = 'hidden';
+            skirt3Normal.style.visibility = 'visible';
+        }
+        if (dress3Wind && dress3Normal && dress3Wind.style.visibility === 'visible') {
+            dress3Wind.style.visibility = 'hidden';
+            dress3Normal.style.visibility = 'visible';
+        }
+    }
+}
+document.addEventListener("DOMContentLoaded", () => {
+    const windButton = document.getElementById("wind-button");
+
+    if (windButton) {
+        windButton.addEventListener("mousedown", applyWindEffect);
+        windButton.addEventListener("mouseup", removeWindEffect);
+        windButton.addEventListener("mouseleave", removeWindEffect);
+        windButton.addEventListener("touchstart", e => {
+            e.preventDefault();
+            applyWindEffect();
+        }, { passive: false });
+        windButton.addEventListener("touchend", e => {
+            e.preventDefault();
+            removeWindEffect();
+        }, { passive: false });
+    }
 });
