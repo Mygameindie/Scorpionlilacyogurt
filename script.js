@@ -105,6 +105,71 @@ function toggleVisibility(itemId, categoryName) {
         }
     }
 }
+// Load each JSON file
+async function loadItemFile(file) {
+    try {
+        const response = await fetch(file);
+        if (!response.ok) throw new Error(`Error loading file: ${file}`);
+        return await response.json();
+    } catch (error) {
+        console.error(`Failed to load ${file}:`, error);
+        return [];
+    }
+}
+/* === Color Swatch Fixups (append only) === */
+(() => {
+  // 1) Bridge: some code reads window.currentlySelectedItem but it's declared with `let`.
+  try {
+    if (!('currentlySelectedItem' in window)) {
+      Object.defineProperty(window, 'currentlySelectedItem', {
+        get(){ try { return typeof currentlySelectedItem !== 'undefined' ? currentlySelectedItem : null; } catch(e){ return null; } },
+        set(v){ try { currentlySelectedItem = v; } catch(e) { /* no-op */ } }
+      });
+    }
+  } catch (e) { /* ignore */ }
+
+  // 2) Idempotent, safe createColorPicker (in case a later stub overwrote the real one)
+  function buildPickerOnce() {
+    if (document.querySelector('.color-picker-container')) return; // already built
+
+    const container = document.createElement('div');
+    container.className = 'color-picker-container';
+    container.style.display = 'none';
+
+    const title = document.createElement('h4');
+    title.textContent = 'Choose Color:';
+    container.appendChild(title);
+
+    const grid = document.createElement('div');
+    grid.className = 'color-grid';
+
+    // Use your existing palette so the swatch-upgrade can convert them to circles
+    (window.colorPalette || []).forEach(c => {
+      const btn = document.createElement('button');
+      btn.className = 'color-button';
+      btn.textContent = c.name;
+      // keep old behavior for fallback (CSS filter)
+      btn.onclick = () => window.applyColorToItem?.(c.value);
+      grid.appendChild(btn);
+    });
+
+    container.appendChild(grid);
+
+    const close = document.createElement('button');
+    close.className = 'close-color-picker';
+    close.textContent = 'Close';
+    close.onclick = () => window.hideColorPicker?.();
+    container.appendChild(close);
+
+    (document.querySelector('.controls') || document.body).appendChild(container);
+  }
+
+  // Replace/restore global createColorPicker to the safe one (append-only override).
+  window.createColorPicker = function() { buildPickerOnce(); };
+
+  // Build immediately if not present (covers the case where a stub ran earlier)
+  buildPickerOnce();
+})();
 
 // ===== COLOR PICKER =====
 function createColorPicker() {
@@ -383,38 +448,96 @@ window.addEventListener('load', () => {
     const loadingScreen = document.getElementById('loading-screen');
     if (loadingScreen) loadingScreen.style.display = 'none';
 });
-// Toggle normal and wind variants for skirt and dress sprites
-function toggleWindEffect(apply) {
-    const variants = [
-        ['skirt1', 'skirt1w'],
-        ['dress1', 'dress1w'],
-        ['skirt2', 'skirt2w'],
-        ['dress2', 'dress2w'],
-        ['skirt3', 'skirt3w'],
-        ['dress3', 'dress3w']
-    ];
+function applyWindEffect() {
     for (let i = 1; i <= 10; i++) {
-        variants.forEach(([normalPrefix, windPrefix]) => {
-            const normal = document.getElementById(`${normalPrefix}_${i}.png`);
-            const wind = document.getElementById(`${windPrefix}_${i}.png`);
-            if (!normal || !wind) return;
-            if (apply && normal.style.visibility === 'visible') {
-                normal.style.visibility = 'hidden';
-                wind.style.visibility = 'visible';
-            } else if (!apply && wind.style.visibility === 'visible') {
-                wind.style.visibility = 'hidden';
-                normal.style.visibility = 'visible';
-            }
-        });
+        const skirt1Normal = document.getElementById(`skirt1_${i}.png`);
+        const skirt1Wind = document.getElementById(`skirt1_${i}w.png`);
+        const dress1Normal = document.getElementById(`dress1_${i}.png`);
+        const dress1Wind = document.getElementById(`dress1_${i}w.png`);
+
+        const skirt2Normal = document.getElementById(`skirt2_${i}.png`);
+        const skirt2Wind = document.getElementById(`skirt2_${i}w.png`);
+        const dress2Normal = document.getElementById(`dress2_${i}.png`);
+        const dress2Wind = document.getElementById(`dress2_${i}w.png`);
+
+        const skirt3Normal = document.getElementById(`skirt3_${i}.png`);
+        const skirt3Wind = document.getElementById(`skirt3_${i}w.png`);
+        const dress3Normal = document.getElementById(`dress3_${i}.png`);
+        const dress3Wind = document.getElementById(`dress3_${i}w.png`);
+
+        if (skirt1Normal && skirt1Wind && skirt1Normal.style.visibility === 'visible') {
+            skirt1Normal.style.visibility = 'hidden';
+            skirt1Wind.style.visibility = 'visible';
+        }
+        if (dress1Normal && dress1Wind && dress1Normal.style.visibility === 'visible') {
+            dress1Normal.style.visibility = 'hidden';
+            dress1Wind.style.visibility = 'visible';
+        }
+
+        if (skirt2Normal && skirt2Wind && skirt2Normal.style.visibility === 'visible') {
+            skirt2Normal.style.visibility = 'hidden';
+            skirt2Wind.style.visibility = 'visible';
+        }
+        if (dress2Normal && dress2Wind && dress2Normal.style.visibility === 'visible') {
+            dress2Normal.style.visibility = 'hidden';
+            dress2Wind.style.visibility = 'visible';
+        }
+
+        if (skirt3Normal && skirt3Wind && skirt3Normal.style.visibility === 'visible') {
+            skirt3Normal.style.visibility = 'hidden';
+            skirt3Wind.style.visibility = 'visible';
+        }
+        if (dress3Normal && dress3Wind && dress3Normal.style.visibility === 'visible') {
+            dress3Normal.style.visibility = 'hidden';
+            dress3Wind.style.visibility = 'visible';
+        }
     }
 }
 
-function applyWindEffect() {
-    toggleWindEffect(true);
-}
-
 function removeWindEffect() {
-    toggleWindEffect(false);
+    for (let i = 1; i <= 10; i++) {
+        const skirt1Normal = document.getElementById(`skirt1_${i}.png`);
+        const skirt1Wind = document.getElementById(`skirt1_${i}w.png`);
+        const dress1Normal = document.getElementById(`dress1_${i}.png`);
+        const dress1Wind = document.getElementById(`dress1_${i}w.png`);
+
+        const skirt2Normal = document.getElementById(`skirt2_${i}.png`);
+        const skirt2Wind = document.getElementById(`skirt2_${i}w.png`);
+        const dress2Normal = document.getElementById(`dress2_${i}.png`);
+        const dress2Wind = document.getElementById(`dress2_${i}w.png`);
+
+        const skirt3Normal = document.getElementById(`skirt3_${i}.png`);
+        const skirt3Wind = document.getElementById(`skirt3_${i}w.png`);
+        const dress3Normal = document.getElementById(`dress3_${i}.png`);
+        const dress3Wind = document.getElementById(`dress3_${i}w.png`);
+
+        if (skirt1Wind && skirt1Normal && skirt1Wind.style.visibility === 'visible') {
+            skirt1Wind.style.visibility = 'hidden';
+            skirt1Normal.style.visibility = 'visible';
+        }
+        if (dress1Wind && dress1Normal && dress1Wind.style.visibility === 'visible') {
+            dress1Wind.style.visibility = 'hidden';
+            dress1Normal.style.visibility = 'visible';
+        }
+
+        if (skirt2Wind && skirt2Normal && skirt2Wind.style.visibility === 'visible') {
+            skirt2Wind.style.visibility = 'hidden';
+            skirt2Normal.style.visibility = 'visible';
+        }
+        if (dress2Wind && dress2Normal && dress2Wind.style.visibility === 'visible') {
+            dress2Wind.style.visibility = 'hidden';
+            dress2Normal.style.visibility = 'visible';
+        }
+
+        if (skirt3Wind && skirt3Normal && skirt3Wind.style.visibility === 'visible') {
+            skirt3Wind.style.visibility = 'hidden';
+            skirt3Normal.style.visibility = 'visible';
+        }
+        if (dress3Wind && dress3Normal && dress3Wind.style.visibility === 'visible') {
+            dress3Wind.style.visibility = 'hidden';
+            dress3Normal.style.visibility = 'visible';
+        }
+    }
 }
 document.addEventListener("DOMContentLoaded", () => {
     const windButton = document.getElementById("wind-button");
@@ -433,3 +556,92 @@ document.addEventListener("DOMContentLoaded", () => {
         }, { passive: false });
     }
 });
+/* === Color Swatch Upgrade (Aug 9, 2025) — append only === */
+(() => {
+  // Map swatch fill colors (UI only). "Original" shows a checkerboard.
+  const SWATCH_HEX = {
+    Original: null,
+    Red: '#ff3b30',
+    Orange: '#ff9500',
+    Yellow: '#ffcc00',
+    Green: '#34c759',
+    Cyan: '#32ade6',
+    Blue: '#007aff',
+    Purple: '#af52de',
+    Pink: '#ff2d55'
+  };
+
+  function enhanceColorPicker() {
+    const picker = document.querySelector('.color-picker-container');
+    if (!picker) return false;
+
+    const grid = picker.querySelector('.color-grid');
+    if (!grid) return false;
+
+    const btns = Array.from(grid.querySelectorAll('.color-button'));
+    if (!btns.length) return false;
+
+    // Turn each existing text button into a circular swatch.
+    btns.forEach((btn) => {
+      const name = (btn.textContent || '').trim();
+      const hex = SWATCH_HEX[name] ?? null;
+
+      // Make label screen-reader only; visual is the color circle
+      btn.innerHTML = `<span class="visually-hidden">${name}</span>`;
+      btn.setAttribute('aria-label', name);
+      btn.setAttribute('role', 'radio');
+      btn.setAttribute('aria-checked', 'false');
+      btn.title = name;
+
+      if (name === 'Original') {
+        btn.classList.add('original');
+        btn.style.background = '';
+      } else if (hex) {
+        btn.style.background = hex;
+      }
+
+      // Keep a reference to the original onclick (which used filters) for fallback.
+      const originalOnclick = btn.onclick;
+
+      // Replace with higher-quality recolor + auto-fallback.
+      btn.onclick = async (e) => {
+        e.stopPropagation();
+        // Nothing selected? defer to original behavior.
+        if (!window.currentlySelectedItem) {
+          originalOnclick?.(e);
+          return;
+        }
+
+        try {
+          // Use named, per-pixel recoloring (preserves alpha).
+          await window.setItemNamedColor(window.currentlySelectedItem, name);
+        } catch {
+          // If canvas/CORS blocks this, fall back to your existing filter logic.
+          originalOnclick?.(e);
+        }
+
+        // Selection ring
+        btns.forEach(b => b.setAttribute('aria-checked', 'false'));
+        btn.setAttribute('aria-checked', 'true');
+
+        // Close after choose (keeps your current UX)
+        window.hideColorPicker?.();
+      };
+    });
+
+    // mark as enhanced so we don't do it twice
+    grid.dataset.enhanced = '1';
+    return true;
+  }
+
+  // Try once on load, and also watch for when the picker is created dynamically.
+  const tryEnhance = () => {
+    if (document.querySelector('.color-grid[data-enhanced="1"]')) return;
+    enhanceColorPicker();
+  };
+
+  window.addEventListener('load', tryEnhance);
+
+  const mo = new MutationObserver(() => tryEnhance());
+  mo.observe(document.body, { childList: true, subtree: true });
+})();

@@ -384,3 +384,56 @@ body {
     align-items: center;
     gap: 4px;
 }
+/* === Color Swatches (circles) === */
+.color-grid .color-button{
+  width:40px;height:40px;border-radius:9999px;padding:0;border:2px solid #ddd;
+  display:inline-flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
+.color-grid .color-button:hover{ transform:scale(1.06); border-color:#6200ea; }
+.color-grid .color-button[aria-checked="true"]{ box-shadow:0 0 0 3px rgba(98,0,234,.35); border-color:#6200ea; }
+.color-grid .color-button .visually-hidden{
+  position:absolute!important;width:1px!important;height:1px!important;margin:-1px!important;padding:0!important;
+  overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important;
+}
+/* Checkerboard background for "Original" */
+.color-grid .color-button.original{
+  background-image:
+   linear-gradient(45deg,#ddd 25%,transparent 25%),
+   linear-gradient(-45deg,#ddd 25%,transparent 25%),
+   linear-gradient(45deg,transparent 75%,#ddd 75%),
+   linear-gradient(-45deg,transparent 75%,#ddd 75%);
+  background-size:10px 10px;background-position:0 0,0 5px,5px -5px,-5px 0;
+}
+@media (max-width:600px){ .color-grid .color-button{ width:36px;height:36px; } }
+/* === Color Wheel Picker (append only) === */
+.color-advanced { margin-top: 8px; padding-top: 8px; border-top: 1px dashed #ddd; }
+.color-advanced .section-title { font-size: 14px; margin: 6px 0; opacity: .8; }
+
+.color-wheel-wrap { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+
+.color-wheel-stage { position: relative; width: 180px; height: 180px; }
+.color-wheel-stage canvas { width: 180px; height: 180px; display: block; touch-action: none; cursor: crosshair; }
+.color-wheel-cursor {
+  position: absolute; width: 12px; height: 12px; border-radius: 9999px;
+  border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.6);
+  pointer-events: none; transform: translate(-50%, -50%);
+}
+
+.color-wheel-side { display: grid; gap: 8px; align-content: start; }
+.color-preview {
+  width: 36px; height: 36px; border-radius: 9999px; border: 2px solid #ddd;
+}
+.color-actions { display: flex; gap: 8px; align-items: center; }
+.color-actions button { padding: 6px 10px; border-radius: 8px; border: 1px solid #ccc; background: #f9f9f9; }
+.color-actions label { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; }
+
+@media (max-width: 600px){
+  .color-wheel-stage, .color-wheel-stage canvas { width: 160px; height: 160px; }
+}
+/* === Unlimited Color Fallback Overlay (append only) === */
+.color-blend {
+  position: absolute;
+  pointer-events: none;
+  mix-blend-mode: color; /* recolors even greys while keeping luminance */
+}
